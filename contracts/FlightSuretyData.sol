@@ -35,14 +35,25 @@ contract FlightSuretyData {
     function isFundedAirlineFunc(address airline) public returns(bool){ // DONE :)
         return airlinesList[airline].isFunded;
     }
-    function registerAirline(address airlineToBeRegistered, address airlineWantToRegisterOtherAirline) external  requireIsOperational { // DONE :)
+ /*   function registerAirline(address airlineToBeRegistered)external requireIsOperational{ // DONE :)
         //I just put a stupid names to not get lost ::D.
-        //require(isFundedAirlineFunc(airlineWantToRegisterOtherAirline),"If you want to register other, fund 10 ether first -.-");
+        require(isFundedAirlineFunc(msg.sender),"If you want to register other, fund 10 ether first -.-");
         Airline storage _airline = airlinesList[airlineToBeRegistered];
         _airline.isRegistered = true;
         airlinesCounter = airlinesCounter + 1;
         emit AirlineRegisteredEvent(airlineToBeRegistered);
-    }    
+    }*/
+
+    function registerAirline(address airlineToBeRegistered, address airlineWantToRegisterOtherAirline) external  requireIsOperational { // DONE :)
+        //I just put a stupid names to not get lost ::D.
+        require(isFundedAirlineFunc(airlineWantToRegisterOtherAirline),"If you want to register other, fund 10 ether first -.-");
+        Airline storage _airline = airlinesList[airlineToBeRegistered];
+        _airline.isRegistered = true;
+        airlinesCounter = airlinesCounter + 1;
+        emit AirlineRegisteredEvent(airlineToBeRegistered);
+    }
+
+
     function fund()external payable requireIsOperational{ // DONE :)
         require(isRegisteredAirlineFunc(msg.sender), "airline is not registered yet, so you can not fund.");
         require(!isFundedAirlineFunc(msg.sender), "airline is already funded, why you want to fund again :P.");
@@ -184,6 +195,7 @@ contract FlightSuretyData {
         _airline.isRegistered = true;
         airlinesCounter = airlinesCounter + 1; 
         //airlinesCounter.add(1);
+        emit AirlineRegisteredEvent(airline);
     }
     function()external payable {}
 

@@ -30,6 +30,7 @@ contract FlightSuretyApp {
 
             require(votesCount > requiredVotes, "You have to be voted by other airlines to get registered in the system.");
 
+            //flightSuretyData.registerAirline(airlineToBeRegistered);
             flightSuretyData.registerAirline(airlineToBeRegistered, msg.sender);
 
             //success = true;
@@ -37,6 +38,7 @@ contract FlightSuretyApp {
 
 
         }else{
+            //flightSuretyData.registerAirline(airlineToBeRegistered);
             flightSuretyData.registerAirline(airlineToBeRegistered, msg.sender);
             //success = true; // :)
             //votes = 0;
@@ -320,6 +322,7 @@ contract FlightSuretyData {
     function getFundedAirlinesCounter() external returns(uint);
     function isRegisteredAirlineFunc(address airline) public returns(bool);
     function isFundedAirlineFunc(address airline) public returns(bool);
+    //function registerAirline(address airlineToBeRegistered)external;
     function registerAirline(address airlineToBeRegistered, address airlineWantToRegisterOtherAirline) external;
     function fund()external payable;
     //function fund()external payable requireIsOperational;

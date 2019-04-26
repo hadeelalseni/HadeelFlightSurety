@@ -110,7 +110,7 @@ contract('Flight Surety Tests', async (accounts) => {
       try{
         await config.flightSuretyData.registerAirline(newAirline, {from: oldAirline} );
       }catch(error){
-        console.log("ERROR ID 01: ", error);
+        //console.log("ERROR ID 01: ", error);
       }
 
       assert.equal(await config.flightSuretyData.isRegisteredAirlineFunc.call(newAirline),false ,"yes you can not register other until funding.");
@@ -128,7 +128,7 @@ contract('Flight Surety Tests', async (accounts) => {
       try{
           await config.flightSuretyData.fund({from: first, value: x});
       }catch(error){
-          console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU   ERROR ID 02: ",error);
+          //console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU   ERROR ID 02: ",error);
       }
       try{
           /*
@@ -140,42 +140,47 @@ contract('Flight Surety Tests', async (accounts) => {
           await config.flightSuretyData.registerAirline(third, first);
           await config.flightSuretyData.registerAirline(fourth, first);
       }catch(error){
-        console.log("ERROR ID 03: ",error);
+        //console.log("ERROR ID 03: ",error);
      }
      assert.equal(await config.flightSuretyData.isRegisteredAirlineFunc.call(second), true);
      assert.equal(await config.flightSuretyData.isRegisteredAirlineFunc.call(third), true);
      assert.equal(await config.flightSuretyData.isRegisteredAirlineFunc.call(fourth), true);
 
   })
-
-  /*
-
   it('fifth airline and above can not be registerd by other, but use voting to be registered.', async() =>{
-    let first  = accounts[0];
+    let first  = accounts[1];
     let second = accounts[2];
     let third  = accounts[3];
     let fourth = accounts[4];
     let fifth  = accounts[5];
 
+    const x = web3.utils.toWei('10', 'ether');
     try{
-        await config.flightSuretyData.fund({from: second, value: web3.utils.toWei('10', 'ether')});
-        await config.flightSuretyData.fund({from: third, value: web3.utils.toWei('10', 'ether')});
-        await config.flightSuretyData.fund({from: fourth, value: web3.utils.toWei('10', 'ether')});
-        await config.flightSuretyData.vote(fifth, {from: second});
-        await config.flightSuretyData.vote(fifth, {from: third});
-        await config.flightSuretyData.vote(fifth, {from: fourth});
+        await config.flightSuretyData.fund({from: first, value: x});
+
+        await config.flightSuretyData.registerAirline(second, first);
+        await config.flightSuretyData.registerAirline(third, first);
+        await config.flightSuretyData.registerAirline(fourth, first);
+
+        await config.flightSuretyData.fund({from: second, value: x});
+        await config.flightSuretyData.fund({from: third, value: x});
+        await config.flightSuretyData.fund({from: fourth, value: x});
+
+        await config.flightSuretyData.vote(fifth, second);
+        await config.flightSuretyData.vote(fifth, third);
+        await config.flightSuretyData.vote(fifth, fourth);
     }catch(error){
-        console.log("ERROR ID 04: ",error);
+        //console.log("ERROR ID 04: ",error);
     }
     try{
-        await config.flightSuretyData.registerAirline(fifth, {from: first});
+        await config.flightSuretyData.registerAirline(fifth, first);
     }catch(error){
-        console.log("ERROR ID 05: ",error);
+        //console.log("ERROR ID 05: ",error);
     }
     assert.equal(await config.flightSuretyData.isRegisteredAirlineFunc.call(fifth), true, "fifth registreation.");
   })
 
-*/
+
  
 
 });
