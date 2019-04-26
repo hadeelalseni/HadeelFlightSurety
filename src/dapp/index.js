@@ -8,7 +8,7 @@ import './flightsurety.css';
 
     let result = null;
 
-    let contract = new Contract('localhost', () => {
+    let contract = new Contract('localhost',async () => {
 
         // Read transaction
         contract.isOperational((error, result) => {
@@ -22,7 +22,18 @@ import './flightsurety.css';
             let flight = DOM.elid('flight-number').value;
             // Write transaction
             contract.fetchFlightStatus(flight, (error, result) => {
-                display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' ' + result.timestamp} ]);
+                display('Oracles', 'Trigger oracles', [ { label: 'Fetch Flight Status', error: error, value: result.flight + ' TimeL:' + result.timestamp + ' status code: ' + result.statusCode } ]);
+            });
+        })
+
+        // User-submitted transaction
+        DOM.elid('buy').addEventListener('click', () => {
+            let flightId = DOM.elid('flight-number').value;
+            let amount = DOM.elid('insurance-amount').value;
+            // Write transaction
+            contract.buy(flightId, amount, (error, result) => {
+                console.log(error,result);
+                display('Insurance', 'Trigger oracles', [ { label: 'Information: ', error: error, value: flightId + '  ' + amount} ]);
             });
         })
     

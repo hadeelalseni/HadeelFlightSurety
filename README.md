@@ -2,51 +2,45 @@
 
 FlightSurety is a sample application project for Udacity's Blockchain course.
 
-## Install
-
-This repository contains Smart Contract code in Solidity (using Truffle), tests (also using Truffle), dApp scaffolding (using HTML, CSS and JS) and server app scaffolding.
-
-To install, download or clone the repo, then:
-
+## Steps to run my project: 
 `npm install`
+`npm install openzeppelin-solidity`
+`npm install truffle-hdwallet-provider`
+`npm install bignumber.js`
+`npm install web3`
+`npm install -g webpack-dev-server`
+`npm install --save-dev webpack`
+`npm install --save-dev webpack-dev-server`
+`npm install --save-dev webpack-cli`
 `truffle compile`
-
-## Develop Client
-
-To run truffle tests:
-
-`truffle test ./test/flightSurety.js`
-`truffle test ./test/oracles.js`
-
-To use the dapp:
-
 `truffle migrate`
+`truffle test`
+`npm run server`
 `npm run dapp`
 
 To view dapp:
 
 `http://localhost:8000`
 
-## Develop Server
+#Versions: 
+Truffle v5.0.14 (core: 5.0.14)
+Solidity v0.5.0 (solc-js)
+Node v9.7.1
+Web3.js v1.0.0-beta.37
 
-`npm run server`
-`truffle test ./test/oracles.js`
+also in node_modules -> openzippline -> math library
+change the pragama line to :  pragma solidity ^0.5.0;
 
-## Deploy
+#Attention1: 
+may you faced problem when (`npm run server` or `npm run dapp`), 
+please re run the beleow command and the erre will gone: 
+`npm install -g webpack-dev-server`
+`npm install --save-dev webpack`
+`npm install --save-dev webpack-dev-server`
+`npm install --save-dev webpack-cli`
 
-To build dapp for prod:
-`npm run dapp:prod`
+#Attention2:
+for copmiler version problems I attached pdf explaines what I change and that is work for me very well.
+also I change line in package.json file as it was giving me an error, I mensioned that in the pdf alos.
 
-Deploy the contents of the ./dapp folder
 
-
-## Resources
-
-* [How does Ethereum work anyway?](https://medium.com/@preethikasireddy/how-does-ethereum-work-anyway-22d1df506369)
-* [BIP39 Mnemonic Generator](https://iancoleman.io/bip39/)
-* [Truffle Framework](http://truffleframework.com/)
-* [Ganache Local Blockchain](http://truffleframework.com/ganache/)
-* [Remix Solidity IDE](https://remix.ethereum.org/)
-* [Solidity Language Reference](http://solidity.readthedocs.io/en/v0.4.24/)
-* [Ethereum Blockchain Explorer](https://etherscan.io/)
-* [Web3Js Reference](https://github.com/ethereum/wiki/wiki/JavaScript-API)

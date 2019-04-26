@@ -28,7 +28,6 @@ contract('Flight Surety Tests', async (accounts) => {
     assert.equal(status, true, "Incorrect initial operating status value");
 
   });
-
   it(`(multiparty) can block access to setOperatingStatus() for non-Contract Owner account`, async function () {
 
       // Ensure that access is denied for non-Contract Owner account
@@ -43,7 +42,6 @@ contract('Flight Surety Tests', async (accounts) => {
       assert.equal(accessDenied, true, "Access not restricted to Contract Owner");
             
   });
-
   it(`(multiparty) can allow access to setOperatingStatus() for Contract Owner account`, async function () {
 
       // Ensure that access is allowed for Contract Owner account
@@ -58,7 +56,6 @@ contract('Flight Surety Tests', async (accounts) => {
       assert.equal(accessDenied, false, "Access not restricted to Contract Owner");
       
   });
-
   it(`(multiparty) can block access to functions using requireIsOperational when operating status is false`, async function () {
 ////
       await config.flightSuretyData.setOperatingStatus(false);
@@ -77,7 +74,6 @@ contract('Flight Surety Tests', async (accounts) => {
       await config.flightSuretyData.setOperatingStatus(true);
 
   });
-
   it('(airline) cannot register an Airline using registerAirline() if it is not funded', async () => {
     
     // ARRANGE
@@ -97,12 +93,10 @@ contract('Flight Surety Tests', async (accounts) => {
     assert.equal(result, false, "Airline should not be able to register another airline if it hasn't provided funding");
 
   });
-
   it('register first airline when deploying.', async() =>{
       let firstAirline = accounts[1];
       assert.equal(await config.flightSuretyData.isRegisteredAirlineFunc.call(firstAirline), true," first airline OKAY :)");
   })
-
   it('airline did not fund, can not register others.', async() =>{
       let oldAirline = accounts[0];
       let newAirline = accounts[2];
@@ -116,7 +110,6 @@ contract('Flight Surety Tests', async (accounts) => {
       assert.equal(await config.flightSuretyData.isRegisteredAirlineFunc.call(newAirline),false ,"yes you can not register other until funding.");
       
   })
-
   it('first 4 airlies can be registerd  by other.', async() =>{
       let first  = accounts[1];
       let second = accounts[2];
@@ -194,10 +187,7 @@ contract('Flight Surety Tests', async (accounts) => {
       var key = await config.flightSuretyData.getFlightKeyFunc.call(flightID, {from: airline});
       //var key = await config.flightSuretyData.getFlightKey.call(airline, flightID, timestamp);
       //console.log("KEY: "+key);
-      //assert.equal(await config.flightSuretyData.isRegisteredFlightFunc.call(key), true,"NOT register flight :(");
+      assert.equal(await config.flightSuretyData.isRegisteredFlightFunc.call(key), true,"NOT register flight :(");
   })
-
-
- 
 
 });
