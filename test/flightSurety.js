@@ -179,6 +179,23 @@ contract('Flight Surety Tests', async (accounts) => {
     }
     assert.equal(await config.flightSuretyData.isRegisteredAirlineFunc.call(fifth), true, "fifth registreation.");
   })
+  it('register flight succesffly.', async() => {
+      let flightID = "101";
+      let airline = accounts[1];
+      let code = 0;
+      let timestamp = Math.floor(Date.now() / 1000);
+
+      try{
+          await config.flightSuretyData.registerFlight(code, timestamp, airline, flightID, {from: airline});
+      }catch(error){
+          console.log("SOMTHJE: ",error);
+      }
+      console.log("ID: "+flightID);
+      var key = await config.flightSuretyData.getFlightKeyFunc.call(flightID, {from: airline});
+      //var key = await config.flightSuretyData.getFlightKey.call(airline, flightID, timestamp);
+      //console.log("KEY: "+key);
+      //assert.equal(await config.flightSuretyData.isRegisteredFlightFunc.call(key), true,"NOT register flight :(");
+  })
 
 
  

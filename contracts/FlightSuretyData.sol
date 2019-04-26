@@ -35,7 +35,7 @@ contract FlightSuretyData {
     function isFundedAirlineFunc(address airline) public returns(bool){ // DONE :)
         return airlinesList[airline].isFunded;
     }
- /*   function registerAirline(address airlineToBeRegistered)external requireIsOperational{ // DONE :)
+    /*   function registerAirline(address airlineToBeRegistered)external requireIsOperational{ // DONE :)
         //I just put a stupid names to not get lost ::D.
         require(isFundedAirlineFunc(msg.sender),"If you want to register other, fund 10 ether first -.-");
         Airline storage _airline = airlinesList[airlineToBeRegistered];
@@ -52,8 +52,6 @@ contract FlightSuretyData {
         airlinesCounter = airlinesCounter + 1;
         emit AirlineRegisteredEvent(airlineToBeRegistered);
     }
-
-
     function fund()external payable requireIsOperational{ // DONE :)
         require(isRegisteredAirlineFunc(msg.sender), "airline is not registered yet, so you can not fund.");
         require(!isFundedAirlineFunc(msg.sender), "airline is already funded, why you want to fund again :P.");
@@ -72,10 +70,6 @@ contract FlightSuretyData {
     function getAirlineVotesCount(address airline)external requireIsOperational returns(uint){
         return airlineVotes[airline];
     }
-
-
-
-
     /********************************************************************************************/
     /*                                       FLIGHT STUFF                                       */
     /********************************************************************************************/
@@ -93,7 +87,7 @@ contract FlightSuretyData {
     function isRegisteredFlightFunc(bytes32 flightKey) external returns (bool){ // DONE :)
         return flightsList[flightKey].isRegistered;
     }
-    function getFlightKeyFunc(string memory flightId) internal returns(bytes32){ // DONE :)
+    function getFlightKeyFunc(string memory flightId) public returns(bytes32){ // DONE :)
         return flightIdKey[flightId];
     }
     function registerFlight(uint8 statusCode, uint256 updatedTimestamp, address airline, string calldata flightId) external requireIsOperational{// DONE :)

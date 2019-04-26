@@ -70,8 +70,6 @@ contract FlightSuretyApp {
             //flightSuretyData.creditInsurees(flightKey);
         }
     }
-
-
     // Generate a request for oracles to fetch flight information
     function fetchFlightStatus(address airline, string calldata flight, uint256 timestamp) external{
         uint8 index = getRandomIndex(msg.sender);
@@ -82,29 +80,9 @@ contract FlightSuretyApp {
 
         emit OracleRequest(index, airline, flight, timestamp);
     } 
-
-
-    /*struct Flight {
-        bool isRegistered;
-        uint8 statusCode;
-        uint256 updatedTimestamp;        
-        address airline;
+    function registerFlight(uint8 statusCode, uint256 updatedTimestamp, address airline, string calldata flightId) external{
+        flightSuretyData.registerFlight(statusCode, updatedTimestamp, airline, flightId);
     }
-    mapping(bytes32 => Flight) private flights;
-    */
-
-       /**
-    * @dev Register a future flight for insuring.
-    *
-    */  
-/*    function registerFlight ///////////////////////////////////////////////////////////////////////////////////////////////////
-                                (
-                                )
-                                external
-                                pure
-    {
-
-    }*/
 
     /********************************************************************************************/
     /*                                       INSURANCE STUFF                                    */
@@ -332,7 +310,7 @@ contract FlightSuretyData {
     //function getAirlineVotesCount(address airline)external requireIsOperational returns(uint);
 
     function isRegisteredFlightFunc(bytes32 flightKey) external returns (bool);
-    function getFlightKeyFunc(string memory flightId) internal returns(bytes32);
+    function getFlightKeyFunc(string memory flightId) public returns(bytes32);
     function registerFlight(uint8 statusCode, uint256 updatedTimestamp, address airline, string calldata flightId) external;
     //function registerFlight(uint8 statusCode, uint256 updatedTimestamp, address airline, string calldata flightId) external requireIsOperational;
 
