@@ -18,6 +18,9 @@ FlightSurety is a sample application project for Udacity's Blockchain course.
 `npm run server`
 `npm run dapp`
 
+`truffle test ./test/flightSurety.js`
+`truffle test ./test/oracles.js`
+
 To view dapp:
 
 `http://localhost:8000`

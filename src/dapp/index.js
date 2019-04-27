@@ -26,6 +26,7 @@ import './flightsurety.css';
             });
         })
 
+        
         // User-submitted transaction
         DOM.elid('buy').addEventListener('click', () => {
             let flightId = DOM.elid('flight-number2').value;
