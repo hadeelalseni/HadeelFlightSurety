@@ -121,7 +121,7 @@ contract('Flight Surety Tests', async (accounts) => {
       try{
           await config.flightSuretyData.fund({from: first, value: x});
       }catch(error){
-          //console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU   ERROR ID 02: ",error);
+          console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU   ERROR ID 02: ",error);
       }
       try{
           /*
