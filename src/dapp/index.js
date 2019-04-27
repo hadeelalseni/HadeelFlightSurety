@@ -28,7 +28,7 @@ import './flightsurety.css';
 
         // User-submitted transaction
         DOM.elid('buy').addEventListener('click', () => {
-            let flightId = DOM.elid('flight-number').value;
+            let flightId = DOM.elid('flight-number2').value;
             let amount = DOM.elid('insurance-amount').value;
             // Write transaction
             contract.buy(flightId, amount, (error, result) => {

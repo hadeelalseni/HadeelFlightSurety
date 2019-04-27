@@ -23,6 +23,7 @@ async function registerOracles(){
   }
 }
 async function hitOracle(oracle){
+  var accounts = await web3.eth.getAccounts();
   try{
     const FEE = await flightSuretyApp.methods.REGISTRATION_FEE.call({from: accounts[0]});
     await flightSuretyApp.methods.registerOracle.send({ from: oracle, value: FEE, gas:3000000});
@@ -38,13 +39,14 @@ async function submitResponse(oracleIndex, airline, flight, timestamp, code, add
   }
 }
 flightSuretyApp.events.OracleRequest({
+  
     fromBlock: 0
-  }, function (error, event) {
+  }, async function (error, event) {
     if (error) {
       console.log(error);
     }
     console.log("EVENT: "+event);
-
+    var accounts = await web3.eth.getAccounts();
     var airline = event.returnValues.airline;
     var index   = event.returnValues.index;
     var flight  = event.returnValues.flight;
@@ -52,111 +54,26 @@ flightSuretyApp.events.OracleRequest({
     var code    = Math.floor(Math.random() % 2 + 7 * 4)*10; // I look in google for a random in javascript, I think this is correct :D
     var oracles = [];
 
-
-
-
-
-
-
-
-
-
+    for(let i = 11; i<33; i++){
+      oracles.push[accounts[i]];
+    }
 
     console.log("oracleRequest - index:"+ index+"	flight: "+ flight+"status code:"+code);
 
-
-
-
-
-
-
-
-
-
-
-
     try{
       for(let i = 0; i< oracles.length; i++){
-
-
-
-
-
-
-
-
-
-
-
-
-
         console.log("i:        "+ i);
-
-
-
-
-
-
-
-
-
-
         var oracles2D = oracles[i][1];
-
         for(let i = 0; i<3; i++){
           if(oracles2D[i] == index){
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             console.log('matcing index found account'+oracles[i][0]+"	indx:"+indexesArray[idx]+"	 array:"+ indexesArray );
-
-
-
             submitResponse(index, airline, flight, time, code, oracles[i][0]);
-
-
-
-
-
-
-
-
           }
         }
-
-
-
-
-
-
-
       }
     }catch(error){
       console.log("ERRROR: "+error);
     }
-
-
-
-
-
-
-
-
-
 });
 
 const app = express();
