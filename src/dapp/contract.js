@@ -47,13 +47,13 @@ export default class Contract {
 
             const x = web3.toWei(10, 'ether');
 
-            this.flightSuretyData.methods.fund().send({from: this.owner, value: x, gas: 99999}, (err, res)=>{
+            this.flightSuretyData.methods.fund().send({from: this.owner, value: x,gas: 4712388, gasPrice: 100000000000}, (err, res)=>{
                 if(res){
-                    //console.log("FUNDING FROM DAPP OKAY :)");
+                    console.log("FUNDING FROM DAPP OKAY :)");
                 }
                 if(err){
                     console.log(err);
-                    //console.log("FUNDING FROM DAPP NOT OKAY :(");
+                    console.log("The revert happen because when first you load the dapp it will fund this account, then if you load it again without run truffle migrate --reset, it reverted because it is already funded. which is the logic that the project want. :) ");
                 }
             });
 
@@ -96,8 +96,10 @@ export default class Contract {
         console.log("PASSENGER: "+passenger);
         let time = Math.floor(Date.now() / 1000);
         try{
-            self.flightSuretyData.methods.buy(airline,passenger , "insuranceId",time, flightId).send({from: passenger, value:this.web3.utils.toWei(amount,"ether"), gas: 33333}, (err, res) => {
+            console.log("before buy: ");
+            self.flightSuretyData.methods.buy(airline,passenger , "insuranceId",time, flightId).send({from: passenger, value:this.web3.utils.toWei(amount,"ether"),gas: 4712388, gasPrice: 100000000000}, (err, res) => {
                 callback(err, res);
+                console.log("RESULT :"+res);
             });
         }catch(error){
             console.log("ERROR: "+error);

@@ -29,7 +29,6 @@ async function registerOracles(){
   }
 }
 async function hitOracle(oracle){
-  //var accounts = await web3.eth.getAccounts();
   try{
     const FEE = await flightSuretyApp.methods.REGISTRATION_FEE().call({from: web3.eth.defaultAccount});
     await flightSuretyApp.methods.registerOracle().send({
@@ -39,27 +38,15 @@ async function hitOracle(oracle){
         gasPrice: 100000000000
     });
     console.log(`oracle ${oracle} registered`)
-
   }catch(error){
     console.log("ERROR: hitOracle:  ", error);
   }
-}
-console.log("??");
-//submit();
-console.log("called");
-async function submit(){
-  for(let i = 0; i < oracleIndexs.length; i++){
-    console.log("Submit before: ");
-    await submitResponse(oracleIndexs[i],accounts[2] , "101", 0, accounts[1]);
-    console.log("Submit aftere: ");
-  }
-
 }
 
 async function submitResponse(oracleIndex, airline, flight, timestamp, code, address){
   try{
     console.log("before await flightSuretyApp.methods.submitOracleResponse");
-    await flightSuretyApp.methods.submitOracleResponse(oracleIndex, airline, flight, timestamp, code).send({from: address, gas: 999999 });
+    await flightSuretyApp.methods.submitOracleResponse(oracleIndex, airline, flight, timestamp, code).send({from: address, gas: 4712388, gasPrice: 100000000000});
     console.log("submitResponse: "+oracleIndex+ airline+ flight+ timestamp+ code+ address);
   }catch(error){
     console.log("Error function submitResponse : ", error);
@@ -75,14 +62,14 @@ flightSuretyApp.events.OracleRequest({fromBlock: 0}, async function (error, even
     var index   = event.returnValues.index;
     var flight  = event.returnValues.flight;
     var time    = event.returnValues.timestamp;
-    var code    = Math.floor(Math.random() * 4)*10; // I look in google for a random in javascript, I think this is correct :D
+    var code    = Math.floor(Math.random()* 4)*10; // I look in google for a random in javascript, I think this is correct :D
     var oracles = [];
 
-    for(let i = 11; i<33; i++){
+    for(let i = 19; i<= 39; i++){
       oracles.push[accounts[i]];
     }
 
-    console.log("oracleRequest - index:"+ index+"    flight: "+ flight+"status code:"+code);
+    console.log("oracleRequest - index:  "+ index+" - flight:  "+ flight+" - status code:  "+code);
 
     try{
       for(let i = 0; i< oracles.length; i++){
