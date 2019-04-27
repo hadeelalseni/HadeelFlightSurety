@@ -186,8 +186,15 @@ contract FlightSuretyData {
                                       
     constructor(address airline) public { // DONE :)
         contractOwner = msg.sender;
-        Airline storage _airline = airlinesList[airline];
-        _airline.isRegistered = true;
+        //Airline storage _airline = airlinesList[airline];
+        //_airline.isRegistered = true;
+
+
+        airlinesList[airline] = Airline({
+            isRegistered : true,
+            isFunded : false
+
+        });
         airlinesCounter = airlinesCounter + 1; 
         //airlinesCounter.add(1);
         emit AirlineRegisteredEvent(airline);

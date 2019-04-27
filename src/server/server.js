@@ -18,8 +18,11 @@ registerOracles();
 
 async function registerOracles(){
   var accounts = await web3.eth.getAccounts();
+  console.log(accounts);
+    web3.eth.defaultAccount = accounts[0];
   for(let i = 19; i<= 39; i++){
     //console.log("Before: "+i);
+    //   console.log(accounts[i])
     hitOracle(accounts[i]);
     oracleIndexs.push(i);
     //console.log("hitOracle:  ", i);
@@ -28,9 +31,15 @@ async function registerOracles(){
 async function hitOracle(oracle){
   //var accounts = await web3.eth.getAccounts();
   try{
-    const FEE = await flightSuretyApp.methods.REGISTRATION_FEE.call({from: web3.eth.defaultAccount});
-    await flightSuretyApp.methods.registerOracle.send({ from: oracle, value: FEE, gas:3000000});
-    
+    const FEE = await flightSuretyApp.methods.REGISTRATION_FEE().call({from: web3.eth.defaultAccount});
+    await flightSuretyApp.methods.registerOracle().send({
+        from: oracle,
+        value: FEE,
+        gas: 4712388,
+        gasPrice: 100000000000
+    });
+    console.log(`oracle ${oracle} registered`)
+
   }catch(error){
     console.log("ERROR: hitOracle:  ", error);
   }
@@ -66,14 +75,14 @@ flightSuretyApp.events.OracleRequest({fromBlock: 0}, async function (error, even
     var index   = event.returnValues.index;
     var flight  = event.returnValues.flight;
     var time    = event.returnValues.timestamp;
-    var code    = Math.floor(Math.random() % 2 + 7 * 4)*10; // I look in google for a random in javascript, I think this is correct :D
+    var code    = Math.floor(Math.random() * 4)*10; // I look in google for a random in javascript, I think this is correct :D
     var oracles = [];
 
     for(let i = 11; i<33; i++){
       oracles.push[accounts[i]];
     }
 
-    console.log("oracleRequest - index:"+ index+"	flight: "+ flight+"status code:"+code);
+    console.log("oracleRequest - index:"+ index+"    flight: "+ flight+"status code:"+code);
 
     try{
       for(let i = 0; i< oracles.length; i++){
@@ -81,7 +90,7 @@ flightSuretyApp.events.OracleRequest({fromBlock: 0}, async function (error, even
         var oracles2D = oracles[i][1];
         for(let i = 0; i<3; i++){
           if(oracles2D[i] == index){
-            console.log('matcing index found account'+oracles[i][0]+"	indx:"+indexesArray[idx]+"	 array:"+ indexesArray );
+            console.log('matcing index found account'+oracles[i][0]+"    indx:"+indexesArray[idx]+"     array:"+ indexesArray );
             submitResponse(index, airline, flight, time, code, oracles[i][0]);
           }
         }
@@ -99,5 +108,3 @@ app.get('/api', (req, res) => {
 })
 
 export default app;
-
-

@@ -30,7 +30,7 @@ export default class Contract {
 
     initialize(callback) { // DONE :)
         this.web3.eth.getAccounts(async(error, accts) => {
-           
+
             this.owner  = accts[0];
             this.first  = accts[1];
             this.second = accts[2];
@@ -47,15 +47,16 @@ export default class Contract {
 
             const x = web3.toWei(10, 'ether');
 
-            this.flightSuretyData.methods.fund.send({from: this.first, value: x, gas: 99999}, (err, res)=>{
+            this.flightSuretyData.methods.fund().send({from: this.owner, value: x, gas: 99999}, (err, res)=>{
                 if(res){
                     //console.log("FUNDING FROM DAPP OKAY :)");
                 }
                 if(err){
+                    console.log(err);
                     //console.log("FUNDING FROM DAPP NOT OKAY :(");
                 }
             });
-            
+
             callback();
         });
     }
