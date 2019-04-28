@@ -97,7 +97,7 @@ export default class Contract {
         let time = Math.floor(Date.now() / 1000);
         try{
             console.log("before buy: ");
-            self.flightSuretyData.methods.buy(airline,passenger , "insuranceId",time, flightId).send({from: passenger, value:this.web3.utils.toWei(amount,"ether"),gas: 4712388, gasPrice: 100000000000}, (err, res) => {
+            self.flightSuretyData.methods.buy(airline,passenger , "insuranceId",time, flightId, this.web3.utils.toWei(amount,"ether")).send({from: passenger, value:this.web3.utils.toWei(amount,"ether"),gas: 4712388, gasPrice: 100000000000}, (err, res) => {
                 callback(err, res);
                 console.log("RESULT :"+res);
             });

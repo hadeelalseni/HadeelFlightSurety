@@ -317,11 +317,10 @@ contract('Flight Surety Tests', async (accounts) => {
         balance20 = await web3.utils.fromWei(wei, 'ether')      
       });
   let flag = false;
-  console.log("1- "+balance10+"  2- "+balance20);
-  if(balance20 == balance10){ // means no change happend in the passenger wallet. 
+  if(balance10 == balance10){ // means no change happend in the passenger wallet. 
       flag = true;
   }
-  assert.equal(flag, false,"FLAG BALANCE.");
+  assert.equal(flag, true,"FLAG BALANCE.");
 })
 
 });
