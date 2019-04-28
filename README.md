@@ -1,7 +1,10 @@
 # FlightSurety
 
 FlightSurety is a sample application project for Udacity's Blockchain course.
-  
+### Ganache setup: 
+- run Ganache with 40 accounts.
+- and use `truffle migrate --reset`
+
 ## Steps to run my project: 
 - `npm install`
 - `truffle compile`
@@ -33,6 +36,9 @@ To view dapp:
 - `npm install --save-dev webpack`
 - `npm install --save-dev webpack-dev-server`
 - `npm install --save-dev webpack-cli`
+
+### DAPP issue
+1. when you run the dapp first time it will run okay, then If you refresh the page without useing `truffle migrate --reset` you will get revert Error, The revert happen because when first you load the dapp it will fund this account, then if you load it again without run `truffle migrate --reset`, it reverted because it is already funded. which is the logic that the project want. :) 
 
 ### Server hanging issue
 
