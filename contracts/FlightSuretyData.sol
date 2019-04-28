@@ -112,11 +112,12 @@ contract FlightSuretyData {
     /********************************************************************************************/
 
     struct Insurance{
-        address passenger;
+        address payable passenger;
         uint insuranceAmount;
         uint money;
         uint256 updatedTimestamp;
-        string insuranceId;  
+        string insuranceId;
+        address payable airline;  
     }
     mapping(bytes32 => Insurance) private insurancesList; // Insurance key to insurance itself
     mapping(string => bytes32) insuranceIdKey; // mapping passenger address to his insurances list he has paied.
@@ -133,21 +134,22 @@ contract FlightSuretyData {
     function getInsuranceKey(address airline, string memory flightId, uint256 timestamp)pure public returns(bytes32){ // DONE :)
         return keccak256(abi.encodePacked(airline, flightId, timestamp));
     }
-
-    function buy(address payable airline, address passenger, string calldata insuranceId, uint256 updatedTimestamp, string calldata flightId)external payable requireIsOperational{ // DONE :)
+ 
+    function buy(address payable airline2, address payable passenger, string calldata insuranceId, uint256 updatedTimestamp, string calldata flightId, uint amount)external payable requireIsOperational{ // DONE :)
         uint amountPassengerSent = msg.value;
         require(amountPassengerSent <= 1 ether, "msg.value > 1 ether which is not allowed.");
         bytes32 flightKey = flightIdKey[flightId];
         //bytes32 insuranceKey = getInsuranceKey(airline, passenger, insuranceId, updatedTimestamp);
-        bytes32 insuranceKey = getInsuranceKey(airline, flightId, updatedTimestamp);
+        bytes32 insuranceKey = getInsuranceKey(airline2, flightId, updatedTimestamp);
         insuranceFlightMapping[flightKey] = insuranceKey;
         Insurance storage _insurance = insurancesList[insuranceKey];
         _insurance.passenger = passenger;
         _insurance.insuranceAmount = amountPassengerSent;
-        _insurance.money = 0;
+        _insurance.money = amount;
         _insurance.updatedTimestamp = updatedTimestamp;
         _insurance.insuranceId = insuranceId;
-        airline.transfer(amountPassengerSent);
+        _insurance.airline = airline2;
+        airline2.transfer(amountPassengerSent);
 
         emit PassengerPaidInsuranceEvent(passenger, insuranceKey);
 
@@ -164,11 +166,14 @@ contract FlightSuretyData {
 
     }
  
-    function pay(bytes32 insuranceKey) external requireIsOperational{
+    function pay(bytes32 insuranceKey, address payable airline2, address payable insuree) external payable requireIsOperational{
         // if passenger buy insurance !!!
         Insurance storage _insurance = insurancesList[insuranceKey];
         //address insuree = passengerInsurance[_insurance];
-        address payable insuree = address(uint160(_insurance.passenger));
+        //address payable insuree = address(uint160(_insurance.passenger));
+        //    address insuree = address (uint160(_insurance.passenger));
+        //address payable airline2 = address(uint160(_insurance.airline));
+        //   address airline2 = address(uint160(_insurance.airline));
         require(_insurance.money > 0 ,"Your money is zero, so you did not buy insurance and we can not pay to you :P");
         insuree.transfer(_insurance.money);
         _insurance.money = 0;

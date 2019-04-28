@@ -1,7 +1,7 @@
 # FlightSurety
 
 FlightSurety is a sample application project for Udacity's Blockchain course.
-
+  
 ## Steps to run my project: 
 `npm install`
 `npm install openzeppelin-solidity`

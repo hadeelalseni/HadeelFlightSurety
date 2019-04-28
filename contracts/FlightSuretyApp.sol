@@ -88,8 +88,8 @@ contract FlightSuretyApp {
     /********************************************************************************************/
     /*                                       INSURANCE STUFF                                    */
     /********************************************************************************************/
-    function buyInsurance(address payable airline, address passenger, string calldata insuranceId, uint256 updatedTimestamp, string calldata flightId)external payable requireIsOperational{
-        flightSuretyData.buy(airline, passenger, insuranceId, updatedTimestamp, flightId);
+    function buyInsurance(address payable airline, address payable passenger, string calldata insuranceId, uint256 updatedTimestamp, string calldata flightId,  uint amount)external payable requireIsOperational{
+        flightSuretyData.buy(airline, passenger, insuranceId, updatedTimestamp, flightId, amount);
     }
 
     /********************************************************************************************/
@@ -315,11 +315,11 @@ contract FlightSuretyData {
     function registerFlight(uint8 statusCode, uint256 updatedTimestamp, address airline, string calldata flightId) external;
     //function registerFlight(uint8 statusCode, uint256 updatedTimestamp, address airline, string calldata flightId) external requireIsOperational;
 
-    function buy(address payable airline, address passenger, string calldata insuranceId, uint256 updatedTimestamp, string calldata flightId)external payable;
+    function buy(address payable airline, address payable passenger, string calldata insuranceId, uint256 updatedTimestamp, string calldata flightId , uint amount)external payable;
     //function buy(address payable airline, address passenger, string calldata insuranceId, uint256 updatedTimestamp, string calldata flightId)external payable requireIsOperational;
     function creditInsurees(bytes32 insuranceKey)external;
     //function creditInsurees(bytes32 insuranceKey)external requireIsOperational;
-    function pay(bytes32 insuranceKey) external;
+    function pay(bytes32 insuranceKey, address payable airline2, address payable insuree) external payable;
     //function pay(bytes32 insuranceKey) external requireIsOperational;
     function getInsuranceKey(address airline, string memory flightId, uint256 timestamp)pure public returns(bytes32);
 
